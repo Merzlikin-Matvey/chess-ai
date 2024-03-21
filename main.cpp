@@ -11,7 +11,39 @@
 using namespace std;
 
 int main() {
-    game g;
     neural_network nn;
-    g.print_board();
+    genetic_algorithm ga;
+    ga.generate_new_population(100);
+    ga.train(300);
+    int wins = 0;
+    int losses = 0;
+    int draws = 0;
+    int res;
+
+    auto best = ga.selection(50);
+    for (int i = 0; i < best.size(); i++){
+        for (int j = 0; j < 5; j++){
+            game g;
+            res = g.play_game(ga.population[i], nn);
+            if (res == 1){
+                wins++;
+            }
+            else if (res == 2){
+                losses++;
+            }
+            else{
+                draws++;
+            }
+            cout << res << endl;
+        }
+    }
+    cout << "Wins: " << wins << endl;
+    cout << "Losses: " << losses << endl;
+    cout << "Draws: " << draws << endl;
+
+    for (int i = 0; i < 10; i++){
+        game g;
+        res = g.play_game(best[i]);
+        cout << res << endl;
+    }
 }

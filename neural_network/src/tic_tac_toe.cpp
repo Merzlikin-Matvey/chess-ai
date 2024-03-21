@@ -19,7 +19,7 @@ void game::print_board(){
 }
 
 void game::set(int x, int y, int player_num){
-    cout << 1 << endl;
+    board[x][y] = player_num;
 }
 
 vector<pair<int, int>> game::available_moves(){
@@ -59,7 +59,7 @@ int game::winner(){
         return 3;
     }
 
-    return -1;
+    return 0;
 }
 
 cube game::convert_board(const vector<std::vector<int>>& v, int your_team) {
@@ -83,3 +83,71 @@ cube game::convert_board(const vector<std::vector<int>>& v, int your_team) {
     return result;
 }
 
+int game::play_game(neural_network nn1, neural_network nn2){
+    game g;
+    int player = 1;
+    while (g.winner() == 0){
+        auto moves = g.available_moves();
+        vector<double> scores;
+        for (auto move : moves){
+            auto new_board = g;
+            new_board.set(move.first, move.second, player);
+            auto input = g.convert_board(new_board.board, player);
+            double score;
+            if (player == 1){
+                score = nn1.forward(input);
+                player = 2;
+            }
+            else{
+                score = nn2.forward(input);
+                player = 1;
+            }
+            scores.push_back(score);
+        }
+        int best_move = 0;
+        for (int i = 0; i < scores.size(); i++){
+            if (scores[i] > scores[best_move]){
+                best_move = i;
+            }
+        }
+        g.set(moves[best_move].first, moves[best_move].second, player);
+    }
+    return g.winner();
+}
+
+int game::play_game(neural_network nn) {
+    game g;
+    int player = 1;
+    int x, y;
+    while (g.winner() == 0){
+        g.print_board();
+        auto moves = g.available_moves();
+        vector<double> scores;
+        if (player == 1) {
+            for (auto move: moves) {
+                auto new_board = g;
+                new_board.set(move.first, move.second, player);
+                auto input = g.convert_board(new_board.board, player);
+                double score;
+                score = nn.forward(input);
+                scores.push_back(score);
+            }
+
+            int best_move = 0;
+            for (int i = 0; i < scores.size(); i++) {
+                if (scores[i] > scores[best_move]) {
+                    best_move = i;
+                }
+            }
+            g.set(moves[best_move].first, moves[best_move].second, player);
+            player = 2;
+        }
+        else{
+            cout << "Enter x and y: ";
+            cin >> x >> y;
+            g.set(x, y, player);
+            player = 1;
+        }
+    }
+    return g.winner();
+}

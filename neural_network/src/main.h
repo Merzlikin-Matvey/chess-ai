@@ -12,7 +12,6 @@ class neural_network{
 public:
     cube weights1 = randu(2, 2, 2);
     vec weights2 = randu(4);
-    cube weights3 = randu(2, 2, 2);
 
     double forward(cube input);
     mat convolution(mat input, mat weights);
@@ -34,9 +33,26 @@ public:
 
     void print_board();
     void set(int x, int y, int player_num);
-    vector<pair<int, int>> available_moves();
     int winner();
-    static cube convert_board(const vector<std::vector<int>>& v, int your_team);
+    vector<pair<int, int>> available_moves();
+    cube convert_board(const vector<std::vector<int>>& v, int your_team);
+    int play_game(neural_network nn1, neural_network nn2);
+    int play_game(neural_network nn);
 };
+
+class genetic_algorithm{
+public:
+    int population_size;
+    vector<neural_network> population;
+
+    void generate_new_population(int size);
+    double evaluate_score(neural_network nn, int games);
+    vector<neural_network> selection(int size);
+    neural_network mutate(neural_network nn, double mutation_rate);
+    void increase_population(vector<neural_network>);
+    void train(int generations);
+    neural_network best_nn();
+};
+
 
 #endif //CHESS_AI_MAIN_H
