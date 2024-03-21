@@ -1,7 +1,7 @@
+#define ARMA_DONT_USE_BLAS
 #include <armadillo>
 #include <cmath>
 
-#include "tic_tac_toe.cpp"
 #include "main.h"
 
 using namespace std;

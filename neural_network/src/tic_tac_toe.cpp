@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#define ARMA_DONT_USE_BLAS
 #include <armadillo>
 
 #include "main.h"

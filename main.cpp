@@ -1,4 +1,5 @@
 #include <iostream>
+#define ARMA_DONT_USE_BLAS
 #include <armadillo>
 #include <chrono>
 #include <vector>
