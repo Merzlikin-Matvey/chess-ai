@@ -13,13 +13,14 @@ void genetic_algorithm::generate_new_population(int size){
         neural_network nn;
         population.push_back(nn);
     }
+    old = population;
 }
 
 double genetic_algorithm::evaluate_score(neural_network nn, int games){
     double result;
     for (int i = 0; i < games; i++){
         game g;
-        neural_network opponent = population[rand() % population_size];
+        neural_network opponent = old[rand() % population_size];
         int player = 1;
         while (g.winner() == 0){
             auto moves = g.available_moves();
@@ -89,14 +90,16 @@ vector<neural_network> genetic_algorithm::selection(int size){
 }
 
 neural_network genetic_algorithm::mutate(neural_network nn, double mutation_rate){
-    for(int i = 0; i < nn.weights1.n_elem; i++){
+    default_random_engine generator;
+    normal_distribution<double> distribution(0, 0.15);
+    for (int i = 0; i < nn.weights1.n_elem; i++){
         if ((double)rand() / RAND_MAX < mutation_rate){
-            nn.weights1[i] = (double)rand() / RAND_MAX;
+            nn.weights1(i) += distribution(generator);
         }
     }
-    for(int i = 0; i < nn.weights2.n_elem; i++){
+    for (int i = 0; i < nn.weights2.n_elem; i++){
         if ((double)rand() / RAND_MAX < mutation_rate){
-            nn.weights2[i] = (double)rand() / RAND_MAX;
+            nn.weights2(i) += distribution(generator);
         }
     }
     return nn;
@@ -106,13 +109,16 @@ void genetic_algorithm::increase_population(vector<neural_network> new_populatio
     population = new_population;
     int i = 0;
     while (population.size() < population_size){
-        population.push_back(mutate(new_population[i % new_population.size()], 0.1));
+        population.push_back(mutate(new_population[i % new_population.size()], 0.25));
     }
 }
 
 void genetic_algorithm::train(int generations){
     cout << "Training started" << endl;
     for (int i = 0; i < generations; i++){
+        if (i % 10 == 5){
+            old = population;
+        }
         cout << "Generation " << i << endl;
         vector<neural_network> selected = selection(20);
         increase_population(selected);

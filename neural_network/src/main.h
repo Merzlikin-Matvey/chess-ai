@@ -44,6 +44,7 @@ class genetic_algorithm{
 public:
     int population_size;
     vector<neural_network> population;
+    vector<neural_network> old;
 
     void generate_new_population(int size);
     double evaluate_score(neural_network nn, int games);
