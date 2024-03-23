@@ -85,8 +85,9 @@ vec neural_network::fully_connected(vec input, vec weights){
     return input.t() * weights;
 }
 
-// Leaky ReLU
+
 double neural_network::output(vec input){
     double alpha = 0.01;
     return (input(0) > 0) ? input(0) : alpha * input(0);
 }
+

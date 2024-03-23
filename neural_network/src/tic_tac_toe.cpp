@@ -83,10 +83,14 @@ cube game::convert_board(const vector<std::vector<int>>& v, int your_team) {
     return result;
 }
 
-int game::play_game(neural_network nn1, neural_network nn2){
+int game::play_game(neural_network nn1, neural_network nn2, bool print){
     game g;
     int player = 1;
     while (g.winner() == 0){
+        if (print){
+            g.print_board();
+            cout << endl;
+        }
         auto moves = g.available_moves();
         vector<double> scores;
         for (auto move : moves){
@@ -96,14 +100,13 @@ int game::play_game(neural_network nn1, neural_network nn2){
             double score;
             if (player == 1){
                 score = nn1.forward(input);
-                player = 2;
             }
             else{
                 score = nn2.forward(input);
-                player = 1;
             }
             scores.push_back(score);
         }
+
         int best_move = 0;
         for (int i = 0; i < scores.size(); i++){
             if (scores[i] > scores[best_move]){
@@ -111,6 +114,13 @@ int game::play_game(neural_network nn1, neural_network nn2){
             }
         }
         g.set(moves[best_move].first, moves[best_move].second, player);
+
+        player = 3 - player;
+    }
+    if (print){
+        g.print_board();
+        cout << "Winner " << g.winner() << endl;
+        cout << endl;
     }
     return g.winner();
 }

@@ -36,7 +36,7 @@ public:
     int winner();
     vector<pair<int, int>> available_moves();
     cube convert_board(const vector<std::vector<int>>& v, int your_team);
-    int play_game(neural_network nn1, neural_network nn2);
+    int play_game(neural_network nn1, neural_network nn2, bool print);
     int play_game(neural_network nn);
 };
 
@@ -47,10 +47,11 @@ public:
     vector<neural_network> old;
 
     void generate_new_population(int size);
-    double evaluate_score(neural_network nn, int games);
+    double evaluate_score(neural_network nn, int games, bool print);
     vector<neural_network> selection(int size);
-    neural_network mutate(neural_network nn, double mutation_rate);
-    void increase_population(vector<neural_network>);
+    neural_network mutate(neural_network nn, double mutation_rate, double standard_deviation);
+    neural_network crossover(neural_network nn1, neural_network nn2, double cr_rate);
+    void generate_population();
     void train(int generations);
     neural_network best_nn();
 };
