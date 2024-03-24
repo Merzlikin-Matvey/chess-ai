@@ -13,8 +13,8 @@ using namespace std;
 int main() {
     neural_network nn;
     genetic_algorithm ga;
-    ga.generate_new_population(100);
-    ga.train(100);
+    ga.generate_new_population(120);
+    ga.train(600);
     int wins = 0;
     int losses = 0;
     int draws = 0;
@@ -41,7 +41,9 @@ int main() {
 
     for (int i = 0; i < 10; i++){
         game g;
-        cout << best[i].weights1 << endl;
+        for (int j = 0; j < best[i].weights.size(); j++){
+            cout << best[i].weights[j] << endl;
+        }
         res = g.play_game(best[i]);
         cout << res << endl;
     }

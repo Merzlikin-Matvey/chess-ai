@@ -11,10 +11,9 @@ using namespace arma;
 double neural_network::forward(cube input){
     mat layer1 = flatten(input.slice(0) - input.slice(1));
     mat layer2 = mat(weights[0] * layer1 + biases[0]); // 9x1
-    mat layer6 = mat(weights[4] * layer2 + biases[4]); // 1x1
+    mat layer3 = mat(weights[1] * layer2 + biases[1]); // 1x1
 
-
-    return layer6(0, 0);
+    return layer3(0, 0);
 
 }
 

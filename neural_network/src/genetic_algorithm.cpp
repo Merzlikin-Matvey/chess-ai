@@ -55,6 +55,7 @@ double genetic_algorithm::evaluate_score(neural_network nn, int games, bool prin
     }
 
 
+
     result /= games;
     return result;
 
