@@ -13,8 +13,8 @@ using namespace std;
 int main() {
     neural_network nn;
     genetic_algorithm ga;
-    ga.generate_new_population(120);
-    ga.train(600);
+    ga.generate_new_population(100);
+    ga.train(700);
     int wins = 0;
     int losses = 0;
     int draws = 0;

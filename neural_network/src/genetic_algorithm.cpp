@@ -144,7 +144,9 @@ void genetic_algorithm::generate_population(){
         neural_network parent1 = selected[rand() % selected.size()];
         neural_network parent2 = selected[rand() % selected.size()];
 
-        auto child = mutate(parent1, 0.25, 1);
+        auto child = crossover(parent1, parent2, 0.3);
+
+        child = mutate(child, 0.25, 1);
 
         new_population.push_back(child);
     }
