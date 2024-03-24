@@ -140,9 +140,10 @@ int game::play_game(neural_network nn) {
                 auto input = g.convert_board(new_board.board, player);
                 double score;
                 score = nn.forward(input);
+                cout << score << " ";
                 scores.push_back(score);
             }
-
+            cout << endl;
             int best_move = 0;
             for (int i = 0; i < scores.size(); i++) {
                 if (scores[i] > scores[best_move]) {

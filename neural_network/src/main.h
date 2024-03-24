@@ -10,8 +10,7 @@ using namespace arma;
 
 class neural_network{
 public:
-    cube weights1 = randu(2, 2, 2);
-    vec weights2 = randu(4);
+    vec weights1 = randu(9) * 20 - 10;
 
     double forward(cube input);
     mat convolution(mat input, mat weights);
@@ -22,7 +21,9 @@ public:
     mat tensor_to_matrix(cube input);
     vec flatten(mat input);
     vec fully_connected(vec input, vec weights);
-    double output(vec input);
+    vec softmax(vec input);
+    cube relu(cube input);
+    double sigmoid(double x);
 };
 
 class game{
