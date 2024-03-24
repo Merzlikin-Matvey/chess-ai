@@ -67,9 +67,7 @@ vector<neural_network> genetic_algorithm::selection(int size){
     for(int i = 0; i < population_size; i++){
         res = evaluate_score(population[i], 20, false);
         scores.push_back(res);
-        cout << res << " ";
     }
-    cout << endl;
 
     vector<neural_network> new_population;
     for(int i = 0; i < size; i++){
@@ -93,21 +91,45 @@ vector<neural_network> genetic_algorithm::selection(int size){
 neural_network genetic_algorithm::mutate(neural_network nn, double mutation_rate, double standard_deviation){
     default_random_engine generator;
     normal_distribution<double> distribution(0, standard_deviation);
-    for (int i = 0; i < nn.weights1.n_elem; i++){
-        if ((double)rand() / RAND_MAX < mutation_rate){
-            nn.weights1(i) += distribution(generator);
+    for (int i = 0; i < nn.weights.size(); i++){
+        for (int j = 0; j < nn.weights[i].n_elem; j++){
+            if ((double)rand() / RAND_MAX < mutation_rate){
+                (nn.weights[i])(j) += distribution(generator);
+            }
         }
     }
+    for (int i = 0; i < nn.biases.size(); i++){
+        for (int j = 0; j < nn.biases[i].n_elem; j++){
+            if ((double)rand() / RAND_MAX < mutation_rate){
+                (nn.biases[i])(j) += distribution(generator);
+            }
+        }
+    }
+
+
     return nn;
 }
 neural_network genetic_algorithm::crossover(neural_network nn1, neural_network nn2, double cr_rate) {
     neural_network new_nn;
-    for (int i = 0; i < nn1.weights1.n_elem; i++){
-        if ((double)rand() / RAND_MAX < cr_rate){
-            new_nn.weights1(i) = nn1.weights1(i);
+    for (int i = 0; i < nn1.weights.size(); i++){
+        for (int j = 0; j < nn1.weights[i].n_elem; j++){
+            if ((double)rand() / RAND_MAX < cr_rate){
+                (new_nn.weights[i])(j) = (nn1.weights[i])(j);
+            }
+            else{
+                (new_nn.weights[i])(j) = (nn2.weights[i])(j);
+            }
         }
-        else{
-            new_nn.weights1(i) = nn2.weights1(i);
+    }
+
+    for (int i = 0; i < nn1.biases.size(); i++){
+        for (int j = 0; j < nn1.biases[i].n_elem; j++){
+            if ((double)rand() / RAND_MAX < cr_rate){
+                (new_nn.biases[i])(j) = (nn1.biases[i])(j);
+            }
+            else{
+                (new_nn.biases[i])(j) = (nn2.biases[i])(j);
+            }
         }
     }
 
@@ -115,14 +137,13 @@ neural_network genetic_algorithm::crossover(neural_network nn1, neural_network n
 }
 
 void genetic_algorithm::generate_population(){
-    auto selected = selection(3);
+    auto selected = selection(10);
     vector<neural_network> new_population;
     while (new_population.size() < population_size) {
         neural_network parent1 = selected[rand() % selected.size()];
         neural_network parent2 = selected[rand() % selected.size()];
 
-        auto child = crossover(parent1, parent2, 0.2);
-        child = mutate(parent1, 0.25, 1); // увеличиваем скорость мутации
+        auto child = mutate(parent1, 0.25, 1);
 
         new_population.push_back(child);
     }

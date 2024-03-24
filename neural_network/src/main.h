@@ -10,7 +10,20 @@ using namespace arma;
 
 class neural_network{
 public:
-    vec weights1 = randu(9) * 20 - 10;
+    mat weights1 = randu<mat>(9, 9);
+    mat bias1 = randu<mat>(9, 1);
+    mat weights2 = randu<mat>(9, 9);
+    mat bias2 = randu<mat>(9, 1);
+    mat weights3 = randu<mat>(9, 9);
+    mat bias3 = randu<mat>(9, 1);
+    mat weights4 = randu<mat>(9, 9);
+    mat bias4 = randu<mat>(9, 1);
+    mat weights5 = randu<mat>(1, 9);
+    mat bias5 = randu<mat>(1, 1);
+
+
+    vector<mat> weights = {weights1, weights2, weights3, weights4, weights5};
+    vector<mat> biases = {bias1, bias2, bias3, bias4, bias5};
 
     double forward(cube input);
     mat convolution(mat input, mat weights);
@@ -20,10 +33,11 @@ public:
     cube pool(cube input, int stride);
     mat tensor_to_matrix(cube input);
     vec flatten(mat input);
-    vec fully_connected(vec input, vec weights);
+    vec fully_connected(vec input, mat weights);
     vec softmax(vec input);
-    cube relu(cube input);
     double sigmoid(double x);
+    vec sigmoid(vec x);
+    mat sigmoid(mat x);
 };
 
 class game{
