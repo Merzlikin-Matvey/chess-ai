@@ -16,12 +16,11 @@ fi
 # Папки, которые надо создать и добавить в json
 directories=("saves")
 names=("SAVES_DIR")
-real_directoriess=()
+real_directories=()
 
 # Для каждой папки найдем ее абсолютный путь
 for dir in "${directories[@]}"; do
-    real_directories=$(realpath $dir)
-    real_directories+=($real_directories)
+    real_directories+=($(realpath $dir))
 done
 
 

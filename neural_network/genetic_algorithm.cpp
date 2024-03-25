@@ -1,5 +1,5 @@
 #include <iostream>
-#include <armadillo>
+#include "armadillo"
 
 #include "main.h"
 

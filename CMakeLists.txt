@@ -7,3 +7,8 @@ add_subdirectory(dependencies/conradsnicta/armadillo-code/armadillo-code-unstabl
 add_executable(Chess_AI main.cpp)
 
 target_link_libraries(Chess_AI Neural_Network armadillo)
+
+add_custom_command(TARGET Chess_AI POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+        ${CMAKE_SOURCE_DIR}/settings.json
+        $<TARGET_FILE_DIR:Chess_AI>)
