@@ -34,11 +34,19 @@ public:
     mat tensor_to_matrix(cube input);
     vec flatten(mat input);
     vec fully_connected(vec input, mat weights);
-    vec softmax(vec input);
+    string save();
+
     double sigmoid(double x);
     vec sigmoid(vec x);
     mat sigmoid(mat x);
-    string save();
+
+    double softmax(double x);
+    vec softmax(vec input);
+    mat softmax(mat input);
+
+    double relu(double x);
+    vec relu(vec x);
+    mat relu(mat x);
 };
 
 class game{

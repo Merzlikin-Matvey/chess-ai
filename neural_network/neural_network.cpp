@@ -91,26 +91,3 @@ vec neural_network::fully_connected(vec input, mat weights){
 }
 
 
-
-double neural_network::sigmoid(double x){
-    return 1 / (1 + exp(-x));
-}
-
-vec neural_network::sigmoid(vec x){
-    vec result(x.n_rows);
-    for (int i = 0; i < x.n_rows; i++){
-        result(i) = sigmoid(x(i));
-    }
-    return result;
-}
-
-mat neural_network::sigmoid(mat x){
-    mat result(x.n_rows, x.n_cols);
-    for (int i = 0; i < x.n_rows; i++){
-        for (int j = 0; j < x.n_cols; j++){
-            result(i, j) = sigmoid(x(i, j));
-        }
-    }
-    return result;
-}
-
