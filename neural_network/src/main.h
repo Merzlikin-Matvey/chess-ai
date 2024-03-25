@@ -38,6 +38,7 @@ public:
     double sigmoid(double x);
     vec sigmoid(vec x);
     mat sigmoid(mat x);
+    string save();
 };
 
 class game{
