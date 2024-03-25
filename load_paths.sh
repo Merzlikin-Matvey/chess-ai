@@ -38,18 +38,20 @@ for dir in "${directories[@]}"; do
     fi
 done
 
-# Создадим пустой settings.json, если его нет
-
-if [ ! -f "settings.json" ]; then
-    echo "Создание файла settings.json"
-    echo "{}" > settings.json
+# Создадим settings.json. Если он есть, то удалим его и создадим новый
+if [ -f "settings.json" ]; then
+    echo "Удаление существующего файла settings.json"
+    rm settings.json
     if [ $? -eq 0 ]; then
-        echo "Создание файла settings.json прошло успешно"
+        echo "Удаление файла settings.json прошло успешно"
     else
-        echo "Ошибка при создании файла settings.json"
+        echo "Ошибка при удалении файла settings.json"
         exit 1
     fi
 fi
+
+echo "{}" > settings.json
+
 
 # Добавим в settings.json пути до папок и их переменные
 for ((i=0; i<${#directories[@]}; i++)); do

@@ -10,20 +10,20 @@ using namespace arma;
 
 class neural_network{
 public:
-    mat weights1 = randu<mat>(9, 9);
-    mat bias1 = randu<mat>(9, 1);
-    mat weights2 = randu<mat>(9, 9);
-    mat bias2 = randu<mat>(9, 1);
-    mat weights3 = randu<mat>(9, 9);
-    mat bias3 = randu<mat>(9, 1);
-    mat weights4 = randu<mat>(9, 9);
-    mat bias4 = randu<mat>(9, 1);
-    mat weights5 = randu<mat>(1, 9);
-    mat bias5 = randu<mat>(1, 1);
+    mat _weights1 = randu<mat>(9, 9);
+    mat _bias1 = randu<mat>(9, 1);
+    mat _weights2 = randu<mat>(9, 9);
+    mat _bias2 = randu<mat>(9, 1);
+    mat _weights3 = randu<mat>(9, 9);
+    mat _bias3 = randu<mat>(9, 1);
+    mat _weights4 = randu<mat>(9, 9);
+    mat _bias4 = randu<mat>(9, 1);
+    mat _weights5 = randu<mat>(1, 9);
+    mat _bias5 = randu<mat>(1, 1);
 
 
-    vector<mat> weights = {weights1, weights2, weights3, weights4, weights5};
-    vector<mat> biases = {bias1, bias2, bias3, bias4, bias5};
+    vector<mat> weights = {_weights1, _weights2, _weights3, _weights4, _weights5};
+    vector<mat> biases = {_bias1, _bias2, _bias3, _bias4, _bias5};
 
     double forward(cube input);
     mat convolution(mat input, mat weights);

@@ -83,8 +83,9 @@ for repo in "${installed_repos[@]}"; do
     IFS='/' read -r -a array <<< "$repo"
     author_name="${array[0]}"
     repo_name="${array[1]}"
+    branch_name="${array[2]}"
 
-    dir_path="dependencies/$author_name/$repo_name"
+    dir_path="dependencies/$author_name/$repo_name/$branch_name"
 
     if [ -f "$dir_path/requirements.sh" ]; then
         echo "Запуск requirements.sh в $repo_name"

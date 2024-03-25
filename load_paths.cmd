@@ -5,8 +5,12 @@ REM Папки, которые надо создать и добавить в js
 set directories=saves
 set names=SAVES_DIR
 
-REM Создадим settings.json
-echo { > settings.json
+REM Проверка на существование settings.json и его удаление, если он существует
+if exist settings.json (
+    del /F settings.json
+)
+
+echo { >> settings.json
 
 REM Создание папок и получение их абсолютных путей
 for %%i in (%directories%) do (
