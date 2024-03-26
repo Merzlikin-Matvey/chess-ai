@@ -24,21 +24,25 @@ file(MAKE_DIRECTORY ${BUILD_DIRECTORY})
 set(LIST
         ${CMAKE_SOURCE_DIR}/settings.json
         ${CMAKE_BINARY_DIR}/dependencies/conradsnicta/armadillo-code/armadillo-code-unstable/libarmadillo.dll
+        ${CMAKE_BINARY_DIR}/dependencies/conradsnicta/armadillo-code/armadillo-code-unstable/libarmadillo.so
         ${CMAKE_BINARY_DIR}/dependencies/Merzlikin-Matvey/chess/chess-main/libchess-engine.dll
+        ${CMAKE_BINARY_DIR}/dependencies/Merzlikin-Matvey/chess/chess-main/libchess-engine.so
         ${CMAKE_BINARY_DIR}/dependencies/Merzlikin-Matvey/chess/chess-main/default_positions.json
 )
+
+foreach(PATH ${LIST})
+    if(EXISTS ${PATH})
+        add_custom_command(TARGET Chess_AI POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy
+                ${PATH}
+                ${BUILD_DIRECTORY})
+    endif()
+endforeach()
 
 add_custom_command(TARGET Chess_AI POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy
         ${CMAKE_SOURCE_DIR}/settings.json
         ${BUILD_DIRECTORY})
-
-foreach(PATH ${LIST})
-    add_custom_command(TARGET Chess_AI POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy
-            ${PATH}
-            ${BUILD_DIRECTORY})
-endforeach()
 
 add_custom_command(TARGET Chess_AI POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Chess_AI> ${BUILD_DIRECTORY})
