@@ -2,7 +2,7 @@
 #define CHESS_AI_MAIN_H
 
 #include <iostream>
-#include "../../cmake-build-debug/dependencies/conradsnicta/armadillo-code/armadillo-code-unstable/tmp/include/armadillo"
+#include <armadillo>
 
 using namespace std;
 using namespace arma;

@@ -19,5 +19,5 @@ string neural_network::save(string path){
         file << biases[i] << endl;
     }
     file.close();
-
+    return path;
 }

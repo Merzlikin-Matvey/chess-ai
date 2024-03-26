@@ -8,7 +8,11 @@ using namespace arma;
 
 
 void genetic_algorithm::generate_new_population(int size){
-    cout << "Generating new population" << endl;
+    for (int i = 0; i < size; i++){
+        neural_network nn;
+        population.push_back(nn);
+    }
+    population_size = size;
 }
 
 double genetic_algorithm::evaluate_score(neural_network nn, int games, bool print){
@@ -151,11 +155,8 @@ void genetic_algorithm::generate_population(){
 void genetic_algorithm::train(int generations){
     cout << "Training started" << endl;
     for (int i = 0; i < generations; i++){
-        if (i % 15 == 0){
-            old = population;
-        }
-        cout << "Generation " << i << endl;
         generate_population();
+        cout << "Generation " << i << " finished" << endl;
     }
     cout << "Training finished" << endl;
 }

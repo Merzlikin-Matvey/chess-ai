@@ -86,7 +86,6 @@ for repo in "${repositories[@]}"; do
     branch_name="${array[3]}"
 
     dir_path="dependencies/$author_name/$repo_name/$repo_name-$branch_name"
-    dir_path="dependencies/$author_name/$repo_name/$repo_name-$branch_name"
     if [ -f "$dir_path/install_requirements.sh" ]; then
         echo "Запуск install_requirements.sh в $repo_name"
         chmod +x $dir_path/install_requirements.sh

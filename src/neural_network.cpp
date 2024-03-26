@@ -1,6 +1,6 @@
 #define ARMA_DONT_USE_BLAS
 #include "armadillo"
-#include "../../dependencies/nlohmann/json/json-master/single_include/nlohmann/json.hpp"
+#include "../dependencies/nlohmann/json/json-master/single_include/nlohmann/json.hpp"
 
 
 #include "main.h"
