@@ -79,23 +79,27 @@ done
 
 
 # Запуск скрипта installer_requirements.sh в каждой из установленных директорий, если он существует
-for repo in "${installed_repos[@]}"; do
+for repo in "${repositories[@]}"; do
     IFS='/' read -r -a array <<< "$repo"
-    author_name="${array[0]}"
-    repo_name="${array[1]}"
-    branch_name="${array[2]}"
+    author_name="${array[1]}"
+    repo_name="${array[2]}"
+    branch_name="${array[3]}"
 
-    dir_path="dependencies/$author_name/$repo_name/$branch_name"
-
-    if [ -f "$dir_path/requirements.sh" ]; then
-        echo "Запуск requirements.sh в $repo_name"
-        chmod +x $dir_path/requirements.sh
-        $dir_path/requirements.sh
+    dir_path="dependencies/$author_name/$repo_name/$repo_name-$branch_name"
+    dir_path="dependencies/$author_name/$repo_name/$repo_name-$branch_name"
+    if [ -f "$dir_path/install_requirements.sh" ]; then
+        echo "Запуск install_requirements.sh в $repo_name"
+        chmod +x $dir_path/install_requirements.sh
+        # Изменяем текущую рабочую директорию на директорию скрипта
+        cd $dir_path
+        ./install_requirements.sh
         if [ $? -eq 0 ]; then
-            echo "Скрипт requirements.sh в $repo_name успешно выполнен"
+            echo "Скрипт install_requirements.sh в $repo_name успешно выполнен"
         else
-            echo "Ошибка при выполнении requirements.sh в $repo_name"
+            echo "Ошибка при выполнении install_requirements.sh в $repo_name"
             exit 1
         fi
+        # Возвращаемся обратно в исходную директорию
+        cd -
     fi
 done

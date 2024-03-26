@@ -2,7 +2,7 @@
 #define CHESS_AI_MAIN_H
 
 #include <iostream>
-#include "armadillo"
+#include "../../cmake-build-debug/dependencies/conradsnicta/armadillo-code/armadillo-code-unstable/tmp/include/armadillo"
 
 using namespace std;
 using namespace arma;
@@ -34,7 +34,8 @@ public:
     mat tensor_to_matrix(cube input);
     vec flatten(mat input);
     vec fully_connected(vec input, mat weights);
-    string save();
+
+    string save(string path);
 
     double sigmoid(double x);
     vec sigmoid(vec x);
