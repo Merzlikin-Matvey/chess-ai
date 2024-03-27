@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <armadillo>
+#include <chess-engine.h>
 
 using namespace std;
 using namespace arma;
@@ -79,6 +80,19 @@ public:
     void generate_population();
     void train(int generations);
     neural_network best_nn();
+};
+
+
+class agent {
+public:
+    neural_network nn;
+    game* g;
+    string color;
+
+    agent(neural_network nn, game* g, string color) : nn(nn), g(g), color(color) {}
+
+    string move();
+
 };
 
 
