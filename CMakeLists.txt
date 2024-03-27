@@ -21,14 +21,21 @@ include_directories(${CMAKE_SOURCE_DIR}/cmake-build-debug/dependencies/Merzlikin
 set(BUILD_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/build")
 file(MAKE_DIRECTORY ${BUILD_DIRECTORY})
 
-set(LIST
-        ${CMAKE_SOURCE_DIR}/settings.json
-        ${CMAKE_BINARY_DIR}/dependencies/conradsnicta/armadillo-code/armadillo-code-unstable/libarmadillo.dll
-        ${CMAKE_BINARY_DIR}/dependencies/conradsnicta/armadillo-code/armadillo-code-unstable/libarmadillo.so
-        ${CMAKE_BINARY_DIR}/dependencies/Merzlikin-Matvey/chess/chess-main/libchess-engine.dll
-        ${CMAKE_BINARY_DIR}/dependencies/Merzlikin-Matvey/chess/chess-main/libchess-engine.so
-        ${CMAKE_BINARY_DIR}/dependencies/Merzlikin-Matvey/chess/chess-main/default_positions.json
-)
+if(WIN32)
+    set(LIST
+            ${CMAKE_SOURCE_DIR}/settings.json
+            ${CMAKE_BINARY_DIR}/dependencies/conradsnicta/armadillo-code/armadillo-code-unstable/libarmadillo.dll
+            ${CMAKE_BINARY_DIR}/dependencies/Merzlikin-Matvey/chess/chess-main/libchess-engine.dll
+            ${CMAKE_BINARY_DIR}/dependencies/Merzlikin-Matvey/chess/chess-main/default_positions.json
+    )
+elseif(UNIX)
+    set(LIST
+            ${CMAKE_SOURCE_DIR}/settings.json
+            ${CMAKE_BINARY_DIR}/dependencies/conradsnicta/armadillo-code/armadillo-code-unstable/libarmadillo.so
+            ${CMAKE_BINARY_DIR}/dependencies/Merzlikin-Matvey/chess/chess-main/libchess-engine.so
+            ${CMAKE_BINARY_DIR}/dependencies/Merzlikin-Matvey/chess/chess-main/default_positions.json
+    )
+endif()
 
 foreach(PATH ${LIST})
     if(EXISTS ${PATH})
